@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HeatUp - PlayNow</title>
+	<style>
+	body {
+		background-image:url("<%= asset_path @genre.downcase+'.jpg' %>");
+
+	}
+
+	.table-page {
+		position: absolute;
+		left: 20%;
+		right: 20%;
+		top: 50%;
+		width: 60%;
+		text-align: center;
+		font-family: 'Open Sans', sans-serif;
+		color:#E62F2F;
+		/*background-color: rgba(255,255,255,0.5);*/
+		border: 2px solid rgba(255, 255, 255, 0.4);
+				border-radius: 14px;
+		-webkit-border-radius: 14px;
+		-moz-border-radius: 14px;
+		border-collapse: separate !important;
+	}
+
+	.title-size {
+		font-size: 40px;
+		color:#E62F2F;
+	}
+
+	.blurred-bg {
+		background-image: url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		background-repeat: no-repeat;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		-webkit-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+	.blurred-bg.tinted {
+		background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+	}
+	.blurred-bg.shaded {
+		background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+	}
+
+	.table-no-border>thead>tr>th, 
+	.table-no-border>tbody>tr>th, 
+	.table-no-border>tfoot>tr>th, 
+	.table-no-border>thead>tr>td, 
+	.table-no-border>tbody>tr>td, 
+	.table-no-border>tfoot>tr>td {
+		border-top: none;
+		border-bottom: none;
+	}
+
+	.table-page>thead>tr>th {
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+	}
+	</style>
+	<head>
+
+		<body >
+			<h1 class="title title-size"><%= @genre %></h1>
+
+			<table class="table table-page table-no-border blurred-bg tinted">
+				<caption class="text-center title-size">Top Songs</caption>
+				<thead>
+					<tr>
+						<th>Place</th>
+						<th>Title</th>
+						<th>Artist</th>
+						<th>Votes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>th is 0</th>
+						<th>th is 1</th>
+						<th>th is 2</th>
+						<th>th is 3</th>
+					</tr>
+					<tr>
+						<th>th is 0</th>
+						<th>th is 1</th>
+						<th>th is 2</th>
+						<th>th is 3</th>
+					</tr>
+					<tr>
+						<th>th is 0</th>
+						<th>th is 1</th>
+						<th>th is 2</th>
+						<th>th is 3</th>
+					</tr>
+					<% @songs.each do |users| %>
+					<tr>
+						<td align="center">1</td>
+						<td align="center"><%= @songs[0].title %></td>
+						<td align="center"><%= @songs[0].artist %></td>
+						<td align="center"><%= @songs[0].votes %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</body>
+		</html>

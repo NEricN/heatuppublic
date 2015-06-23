@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>HeatUp - Music Website for you</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<style>
+
+	body {
+		overflow: hidden;
+	}
+
+	.genres {
+		position: absolute;
+		left: 0%;
+		right: 0%;
+		top: 50%;
+		text-align: center;
+	}
+
+	.carousel-control .icon-prev, .carousel-control .icon-next {
+		font-size: 80px;
+	}
+
+	.carousel-control {
+		text-shadow: 0 1px 2px rgba(230, 47, 47, 0.8);
+	}
+
+	.genre-buttons input[type=radio] {
+		background-color: transparent !important;
+	}
+
+	.genre-submit {
+		padding-top: 20px;
+		text-align: center;
+	}
+
+	.genre-text {
+		font-family: 'Arimo', sans-serif;
+		color:#E62F2F;
+	}
+
+	.playlist-link {
+		font-family: 'Arimo', sans-serif;
+		font-size: 30px;
+		position: absolute;
+		left: 0%;
+		right: 0%;
+		top: 70%;
+		text-align: center;
+	}
+
+	.text {
+		font-family: 'Arimo', sans-serif;
+		color:#E62F2F;
+	}
+
+	.nav-bar {
+		position: absolute;
+		left: 0%;
+		width: 100%;
+		height: 50px;
+		top: 0%;
+	}
+
+	.nav-list {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 20px;
+		float: right;
+	}
+
+	#navcontainer ul
+	{
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		text-align: center;
+	}
+
+	#navcontainer ul li { display: inline;
+	}
+
+	#navcontainer ul li a:hover
+	{
+		color: #fff;
+		background-color: #369;
+	}
+
+	.menu-btn {
+
+	}
+
+	.nav-bar li a.menu-btn:hover {
+		background-color: #369;
+		top: 50px;
+	}
+
+    .left-text-caro {
+        position: absolute;
+        top: calc(50% - 60px);
+        font-size: 30px;
+        left: 80%;
+        vertical-align: middle;
+    }
+
+    .right-text-caro {
+        position: absolute;
+        top: calc(50% - 60px);
+        font-size: 30px;
+        right: 80%;
+        vertical-align: middle;
+    }
+
+	.choose-btn {
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0px;
+		font-family: 'Open Sans', sans-serif;
+		color: #E62F2F;
+		font-size: 15px;
+		background: rgba(0,0,0,0);
+		padding: 2px 10px 4px 10px;
+		border: solid #E62F2F 6px;
+		text-decoration: none;
+
+		transition: all 1.25s ease-in-out;
+		-moz-transition: all 1.25s ease-in-out;
+		-webkit-transition: all 1.25s ;
+
+	}
+
+	.choose-btn:hover {
+		background: #ffffff;
+		background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+		background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+		background-image: -ms-linear-gradient(top, #ffffff, #f2f2f2);
+		background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+		background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+		border: solid #A61F1F 6px;
+		text-decoration: none;
+
+		transition: all .25s ease-in-out;
+		-moz-transition: all .25s ease-in-out;
+		-webkit-transition: all .25s 
+	}
+
+	.blurred-bg {
+		background-image: url("<%= asset_path 'homepage-blurred.jpg' %>");
+		background-repeat: no-repeat;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		-webkit-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+	.blurred-bg.tinted {
+		background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'homepage-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'homepage-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'homepage-blurred.jpg' %>");
+	}
+	.blurred-bg.shaded {
+		background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'homepage-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'homepage-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'homepage-blurred.jpg' %>");
+	}
+
+	.blurred-bg1 {
+		background-image: url("<%= asset_path 'musicians-blurred.jpg' %>");
+		background-repeat: no-repeat;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		-webkit-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+	.blurred-bg1.tinted {
+		background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'musicians-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'musicians-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'musicians-blurred.jpg' %>");
+	}
+	.blurred-bg1.shaded {
+		background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'musicians-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'musicians-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'musicians-blurred.jpg' %>");
+	}
+
+	.blurred-bg2 {
+		background-image: url("<%= asset_path 'classical-blurred.jpg' %>");
+		background-repeat: no-repeat;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		-webkit-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+	.blurred-bg2.tinted {
+		background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'classical-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'classical-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'classical-blurred.jpg' %>");
+	}
+	.blurred-bg2.shaded {
+		background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'classical-blurred.jpg' %>");
+		background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'classical-blurred.jpg' %>");
+		background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'classical-blurred.jpg' %>");
+	}
+
+
+	div {
+		margin: 0 0 0.75em 0;
+	}
+
+	input[type="radio"] {
+		display: none;
+	}
+
+	input[type="radio"] + label {
+		font-family: 'Open Sans', sans-serif;
+		color:#E62F2F;
+		font-size: 14px;
+	}
+
+	input[type="radio"] + label span {
+		display: inline-block;
+		width: 11px;
+		height: 11px;
+		margin: -1px 8px 0 8px;
+		vertical-align: middle;
+		cursor: pointer;
+		-moz-border-radius: 50%;
+		border-radius: 50%;
+		-webkit-box-shadow: 0px 0px 0px 5px rgba(230, 47, 47, 1);
+		-moz-box-shadow: 0px 0px 0px 5px rgba(230, 47, 47, 1);
+		box-shadow: 0px 0px 0px 5px rgba(230, 47, 47, 1);
+	}
+
+	input[type="radio"] + label span {
+		background-color: rgba(0,0,0,0);
+	}
+
+	input[type="radio"]:hover + label span:hover {
+		background-color: rgba(230, 47, 47,0.5);
+	}
+
+	input[type="radio"]:checked + label span {
+		background-color: #E62F2F;
+	}
+
+	input[type="radio"]:hover:checked + label span:hover {
+		background-color: #E62F2F;
+	}
+
+
+
+	input[type="radio"] + label span,
+	input[type="radio"]:checked + label span,
+	input[type="radio"]:hover + label span {
+		-webkit-transition: background-color 0.4s linear;
+		-o-transition: background-color 0.4s linear;
+		-moz-transition: background-color 0.4s linear;
+		transition: background-color 0.4s linear;
+	}
+
+	.cara-offset {
+		margin-top:-70px;
+		z-index:0;
+	}
+
+	.navbar {
+		z-index: 1;
+	}
+
+	.listbox {
+		position:absolute;
+		left:25%;
+		width:50%;
+		top:50%;
+		padding: 5px 5px 5px 5px;
+		border-radius: 10px;
+	}
+
+	.listbox ul li {
+		font-size:18px;
+		margin: 5px 5px 5px 5px;
+	}
+	</style>
+
+	<%= stylesheet_link_tag asset_path('fullcaro.css') %>
+
+	<script>
+		$(document).ready(function() {
+			var cur = 0;
+
+			var drawBackground = function() {
+				$("#signup").removeClass("blurred-bg blurred-bg1 blurred-bg2").addClass("blurred-bg"+(cur == 0 ? "" : cur)+" tinted");
+				$("#signin").removeClass("blurred-bg blurred-bg1 blurred-bg2").addClass("blurred-bg"+(cur == 0 ? "" : cur)+" tinted");
+			}
+
+			var drawText = function() {
+				console.log(cur);
+				switch(cur) {
+					case 2:
+						$("#right-caption").html("");
+						$("#left-caption").html("How musicians can use our site");
+						break;
+					case 0:
+						$("#right-caption").html("How musicians can use our site");
+						$("#left-caption").html("How listeners can use our site");
+						break;
+					case 1:
+						$("#right-caption").html("How listeners can use our site");
+						$("#left-caption").html("");
+						break;
+				}
+			}
+
+			$("#prev-caro").click(function() {
+				cur = (cur - 1 + 3)%3;
+				drawBackground();
+				drawText();
+				$("#prev-caro").blur();
+			});
+
+			$("#next-caro").click(function() {
+				cur = (cur + 1 + 3)%3;
+				drawBackground();
+				drawText();
+				$("#next-caro").blur();
+			});
+
+			$("#chooser").click(function() {
+				window.location.href = "/songs/play?genre=" + $("input:radio[name=genre]:checked").val();
+			})
+		})
+	</script>
+
+
+	<head>
+
+		<body>
+
+			<header id="myCarousel" class="carousel slide cara-offset" data-interval="false">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="Listener" class=""></li>
+					<li data-target="#myCarousel" data-slide-to="Home" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="Musician" class=""></li>
+				</ol>
+
+				<!-- Wrapper for Slides -->
+				<div class="carousel-inner">
+					<div class="item">
+						<!-- Set the first background image using inline CSS below. -->
+						<div class="fill" style="background-image:url('<%= asset_path 'classical.jpg' %>');"></div>
+						<div class="title">
+							<h2>Listeners</h2>
+						</div>
+						<div class="listbox blurred-bg2 tinted text">
+							<ul>
+								<li>Choose the genre you want to hear</li>
+								<li>Listen to two 15 second clips and pick which one you prefer</li>
+								<li>You can also go back and listen to songs you like</li>
+								<li>Discover music and artists. Decide which artists deserve to be known. Beef up your music library.</li>
+								<li>Check out what other people are selecting as their favorite songs on the Hotlist</li>
+							</ul>
+						</div>
+					</div>
+					<div class="item active">
+						<!-- Set the second background image using inline CSS below. -->
+						<div class="fill" style="background-image:url('<%= asset_path 'homepage.jpg' %>');">
+
+						</div>
+						<div class="genres">
+							<div class="genre-buttons">
+								<%= radio_button_tag(:genre, "Hip-Hop", false, class: "genre-button") %>
+								<%= label_tag("genre_Hip-Hop", "<span></span>Hip-Hop".html_safe, class: "genre-text") %> 			
+								<%= radio_button_tag(:genre, "Rock", false, class: "genre-button") %>
+								<%= label_tag("genre_Rock", "<span></span>Rock".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "Pop", false, class: "genre-button") %>
+								<%= label_tag("genre_Pop", "<span></span>Pop".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "Classical", false, class: "genre-button") %>
+								<%= label_tag("genre_Classical", "<span></span>Classical".html_safe, class: "genre-text") %>
+							</div>
+							<div class="genre-buttons">
+								<%= radio_button_tag(:genre, "indie", false, class: "genre-button") %>
+								<%= label_tag("genre_indie", "<span></span>Indie".html_safe, class: "genre-text") %> 			
+								<%= radio_button_tag(:genre, "house", false, class: "genre-button") %>
+								<%= label_tag("genre_house", "<span></span>House".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "techno", false, class: "genre-button") %>
+								<%= label_tag("genre_techno", "<span></span>Techno".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "dubstep", false, class: "genre-button") %>
+								<%= label_tag("genre_dubstep", "<span></span>Dubstep".html_safe, class: "genre-text") %>
+							</div>
+							<div class="genre-buttons">
+								<%= radio_button_tag(:genre, "drum-and-bass", false, class: "genre-button") %>
+								<%= label_tag("genre_drum-and-bass", "<span></span>Drum and Bass".html_safe, class: "genre-text") %> 			
+								<%= radio_button_tag(:genre, "trance", false, class: "genre-button") %>
+								<%= label_tag("genre_trance", "<span></span>Trance".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "electronica", false, class: "genre-button") %>
+								<%= label_tag("genre_electronica", "<span></span>Electronica".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "metal", false, class: "genre-button") %>
+								<%= label_tag("genre_metal", "<span></span>Metal".html_safe, class: "genre-text") %>
+							</div>
+							<div class="genre-buttons">
+								<%= radio_button_tag(:genre, "rock", false, class: "genre-button") %>
+								<%= label_tag("genre_rock", "<span></span>Rock".html_safe, class: "genre-text") %> 			
+								<%= radio_button_tag(:genre, "country", false, class: "genre-button") %>
+								<%= label_tag("genre_country", "<span></span>Country".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "blues", false, class: "genre-button") %>
+								<%= label_tag("genre_blues", "<span></span>Blues".html_safe, class: "genre-text") %>
+								<%= radio_button_tag(:genre, "jazz", false, class: "genre-button") %>
+								<%= label_tag("genre_jazz", "<span></span>Jazz".html_safe, class: "genre-text") %>
+							</div>
+							<div class="genre-submit">
+								<button class="choose-btn" id="chooser">Choose</button>
+							</div>
+						</div>
+						<div class="title">
+							<h2>Playnow</h2>
+						</div>
+						<% if current_user %>
+						<div class="playlist-link">
+							<%= link_to "My playlist", playlist_path, :class => "genre-text" %>
+						</div>
+						<% end %>
+					</div>
+					<div class="item">
+						<!-- Set the third background image using inline CSS below. -->
+						<div class="fill" style="background-image:url('<%= asset_path 'musicians.jpg' %>');"></div>
+						<div class="title">
+							<h2>Musicians</h2>
+						</div>
+						<div class="listbox blurred-bg1 tinted text">
+							<ul>
+								<li>Upload your song and select 15 seconds and the genre it is for</li>
+								<li>Allow the song to be played and matched up with other songs in the same genre</li>
+								<li>Let your talent be heard, your sound be spread, and your fans to become hooked</li>
+								<li>Set up information about your band or self so that those who like your music can hear more</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Controls -->
+				<a class="left carousel-control firelink vertical-center" href="#myCarousel" data-slide="prev" id="prev-caro">
+					<span class="icon-prev"></span>
+					<span class="left-text-caro" id="left-caption">
+						How listeners can use the site
+					</span>
+				</a>
+				<a class="right carousel-control firelink vertical-center" href="#myCarousel" data-slide="next" id="next-caro">
+					<span class="right-text-caro" id="right-caption">
+						How musicians can use the site
+					</span>
+					<span class="icon-next"></span>
+				</a>
+
+			</header>
+
+
+			  	</body>
+			  	</html>

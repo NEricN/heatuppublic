@@ -1,0 +1,53 @@
+<style>
+	.main {
+		width: 80%;
+		left: 10%;
+		top: 20%;
+		height: 60%;
+		position: absolute;
+	}
+
+	body {
+  background-image:url("<%= asset_path 'settings.jpg' %>");
+  overflow: hidden;
+
+}
+
+	.playlist-overflow {
+		overflow: scroll;
+		margin: 20px;
+	}
+
+.blurred-bg {
+  background-image: url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-repeat: no-repeat;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.blurred-bg.tinted {
+  background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+}
+.blurred-bg.shaded {
+  background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+}
+</style>
+
+<div class="main blurred-bg tinted">
+	<div id="sm2-container">
+		<!-- SM2 flash goes here -->
+	</div>
+	<div class="playlist-overflow">
+	<ul class="playlist">
+		<% @songs.each do |s| %>
+		<li> <a href="<%= s.is_downloadable ? s.song_large.url : s.song_bite.url %>"><%= s.user.name + " - " + s.name + (s.website.nil? ? "" : s.website)%></a></li>
+		<% end %>
+	</ul>
+</div>
+</div>

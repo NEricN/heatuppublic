@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>heatUp10</title>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag asset_path('fonts.css') %>
+    <%= stylesheet_link_tag asset_path('360player.css') %>
+    <%= stylesheet_link_tag asset_path('page-player.css') %>
+    <%= stylesheet_link_tag asset_path('bootstrap-social.css') %>
+	<%= csrf_meta_tags %>
+	<!--<%= javascript_include_tag "https://code.jquery.com/jquery-2.1.3.min.js" %>-->
+	<%= javascript_include_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" %>
+    <%= javascript_include_tag asset_path('soundmanager2.js') %>
+    <!--<%= javascript_include_tag asset_path('berniecode-animator.js') %>
+    <%= javascript_include_tag asset_path('360player.js') %>-->
+    <%= javascript_include_tag asset_path('page-player.js') %>
+	<style>
+
+    .vertical-center {
+        vertical-align: middle;
+    }
+
+    .hipster-font {
+        font-family: 'HandVetica';
+    }
+
+    .firelink {
+        text-decoration: none;
+        background: -webkit-linear-gradient(red, orange);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+ body {
+ 	background-repeat:no-repeat;
+ 	background-attachment: fixed;
+ 	background-position:top center;
+ 	background-size: cover;
+ 	background-clip: border-box;
+ 	font-family: "Metrize-Icons";
+ }
+
+ .navbar-brand
+ {
+ 	position: absolute;
+ 	width: 100%;
+ 	left: 0;
+ 	text-align: center;
+ 	margin: auto;
+ 	font-size: 44px;
+ 	height: 150%;
+ }
+
+ .navbar, .navbar-default, .navbar-header {
+ 	background-color: rgba(0,0,0,0);
+ 	border-color: rgba(0,0,0,0);
+    margin: 0;
+    border: 0;
+ }
+
+ .brand-image {
+ 	position: relative;
+ 	top: -5px;
+ }
+
+ .menu-class {
+ 	background-color: rgba(255,255,255, 0.4);
+ }
+
+ .nav-submit {
+ 	margin-top:.75em;width: 100%; height: 32px; font-size: 13px;
+ }
+ .nav-input {
+ 	margin-bottom:.5em;
+ }
+
+ .form-control:focus {
+ 	border-color: rgba(255,0,0,0.5);
+ 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.2);
+ }
+
+ .title {
+ 	text-align:center;
+ 	color:#E62F2F;
+ 	font-family: 'Arimo', sans-serif;;
+ 	position: absolute;
+ 	font-size: 20px;
+ 	top: 35%;
+ 	left: 0%;
+ 	right: 0%;
+ 	font-weight: bold;
+    text-shadow: none;
+ }
+
+ .custom-font-color {
+ 	text-decoration: none;
+ 	background: -webkit-linear-gradient(red, orange);
+ 	-webkit-background-clip: text;
+ 	-webkit-text-fill-color: transparent;
+ }
+
+ html {
+ 	position: relative;
+ 	min-height: 100%;
+ }
+ body {
+ 	/* Margin bottom by footer height */
+ 	margin-bottom: 30px;
+ }
+ .footer {
+ 	position: absolute;
+ 	bottom: 0;
+ 	width: 100%;
+ 	
+ 	/* Set the fixed height of the footer here */
+ 	height: 50px;
+ 	background-color: rgba(255,255,255,0);
+ }
+
+ .social-twitter {
+ 	color: #000;
+
+ 	transition: all .5s ease-in-out;
+				-moz-transition: all .5s ease-in-out;
+				-webkit-transition: all .5s
+ }
+
+ .social-twitter:hover {
+ 	color: #4099FF;
+
+ 	transition: all .5s ease-in-out;
+				-moz-transition: all .5s ease-in-out;
+				-webkit-transition: all .5s 
+ }
+
+ .social-facebook {
+ 	color: #000;
+
+ 	transition: all .5s ease-in-out;
+				-moz-transition: all .5s ease-in-out;
+				-webkit-transition: all .5s
+ }
+
+ .social-facebook:hover {
+ 	color: #3b5998;
+
+ 	transition: all .5s ease-in-out;
+				-moz-transition: all .5s ease-in-out;
+				-webkit-transition: all .5s 
+ }
+
+ .social-soundcloud {
+ 	color: #000;
+ 	transition: all .5s ease-in-out;
+				-moz-transition: all .5s ease-in-out;
+				-webkit-transition: all .5s
+ }
+
+ .social-soundcloud:hover {
+ 	color: #f50;
+
+ 	transition: all .5s ease-in-out;
+				-moz-transition: all .5s ease-in-out;
+				-webkit-transition: all .5s 
+ }
+
+ .icon {
+ 	position: relative;
+ 	color: #000;
+ 	font-size: 40px;
+ 	top: -50%;
+ }
+
+ .nav-bar-right-custom {
+    padding-right: 5%;
+ }
+ .nav-bar-left-custom {
+    padding-right: 5%;
+ }
+	</style>
+
+    <script>
+        <% if !flash.empty? %>
+            alert("<% flash.keys.each do |k| %><%= flash[k] %><% end %>");
+        <% end %>
+
+        $(document).ready(function() {
+             $('#signup-btn').attr('disabled','disabled');
+             $('#fb-signup').attr('disabled', 'disabled');
+             $('#tos-check').click(function() {
+                if($(this).is(':checked')) {
+                    $('#signup-btn').attr('disabled',false);
+                    $('#fb-signup').attr('disabled',false);
+                } else {    
+                    $('#signup-btn').attr('disabled','disabled');
+                    $('#fb-signup').attr('disabled', 'disabled');
+                }
+             });
+             $('#musician-check').click(function() {
+                if($(this).is(':checked')) {
+                    $('#fb-signup').attr('href',$('#fb-signup').attr("href").replace("musician=0", "musician=1"));
+                } else {
+                    $('#fb-signup').attr('href',$('#fb-signup').attr("href").replace("musician=1", "musician=0"));
+                }
+             });
+         });
+    </script>
+
+</head>
+<body>
+
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>    
+		</div>
+		<a class="navbar-brand custom-font-color" href="/"><div><!--<img class="brand-image" src="http://placehold.it/42x42">--></img>heatUp</div></a>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left nav-bar-left-custom">
+                <% if user_signed_in? %>
+                    <li><%= link_to "My playlist", playlist_path, :class => "firelink" %></li>
+                <% end %>
+        <!--<li><a href="#">Left</a></li>
+        <li><a href="#about">Left</a></li>-->
+    </ul>
+    <ul class="nav navbar-nav navbar-right nav-bar-right-custom">
+    	<% if user_signed_in? %>
+    	<!--<li>
+    		<%= link_to "Account", user_path(id: current_user), :class => "button large menu-btn", :method => :get %>
+    	</li>-->
+
+    	<li>
+            <% if current_user.musician %>
+    		  <%= link_to "Settings/Upload", edit_user_registration_path(id: current_user), :class => "button large menu-btn custom-font-color firelink", :method => :get %>
+            <% else %>
+              <%= link_to "Settings", edit_user_registration_path(id: current_user), :class => "button large menu-btn custom-font-color firelink", :method => :get %>
+            <% end %>
+    	</li>
+    	<li>
+    		<%= link_to "Sign out", destroy_user_session_path, :class => "button large menu-btn custom-font-color firelink", :method => :delete %>
+    	</li>
+    	<% else %>
+    	<li class="dropdown"> <a class="dropdown-toggle firelink" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+    		<div class="dropdown-menu menu-class blurred-bg tinted" style="padding: 10px;min-width:240px;" id="signin">
+                <%= link_to "<i class='fa fa-facebook'></i> Sign in with Facebook".html_safe, user_omniauth_authorize_path(:facebook), :class => "btn btn-block btn-social btn-facebook" %>
+
+    			<%= form_for(:user, url: session_path(:user)) do |f| %>
+    			<div class="field">
+    				<%= f.email_field :email, autofocus: true, placeholder: "Email", class: "form-control nav-input"%>
+    			</div>
+
+    			<div class="field">
+    				<%= f.password_field :password, autocomplete: "off", placeholder: "Password", class: "form-control nav-input" %>
+    			</div>
+    			<div class="field">
+    				<%= f.check_box :remember_me %>
+    				<%= f.label :remember_me %>
+    			</div>
+
+    			<div class="actions">
+    				<%= f.submit "Log in", :class => "btn btn-default nav-submit" %>
+    			</div>
+    			<% end %>
+    		</div>
+    	</li>
+    	<li class="dropdown"> <a class="dropdown-toggle firelink" href="#" data-toggle="dropdown">Sign Up <strong class="caret"></strong></a>
+    		<div class="dropdown-menu menu-class blurred-bg tinted" style="padding: 10px;min-width:240px;" id="signup">
+    			<%= form_for(:user, url: registration_path(:user)) do |f| %>
+
+    			<div class="field">
+    				<%= f.text_field :name, :autofocus => true,  placeholder: "Name", class: "form-control nav-input"%>
+    			</div>
+
+    			<div class="field">
+    				<%= f.email_field :email, autofocus: true,  placeholder: "Email", class: "form-control nav-input"%>
+    			</div>
+
+    			<div class="field">
+    				<% if @validatable %>
+    				<em>(<%= @minimum_password_length %> characters minimum)</em>
+    				<% end %>
+    				<%= f.password_field :password, autocomplete: "off",  placeholder: "Password", class: "form-control nav-input"%>
+    			</div>
+
+    			<div class="field">
+    				<%= f.password_field :password_confirmation, autocomplete: "off",  placeholder: "Password Confirmation", class: "form-control nav-input"%>
+    			</div>
+    			<div class="field">
+    				<%= f.check_box :musician, :id => "musician-check" %>
+    				<%= f.label :musician, "I am a musician" %>
+    			</div>
+
+                <div class="field">
+                    <%= f.check_box :tos, :id => "tos-check" %>
+                    <%= f.label :tos, ("I agree to the <br />" + link_to("terms and conditions", tos_path, target: :_blank) + ".").html_safe %>
+                </div>
+
+    			<div class="actions">
+    				<%= f.submit "Sign Up", :class => "btn btn-default nav-submit", :id => "signup-btn" %>
+    			</div>
+    			<% end %>
+
+
+                <%= link_to "<i class='fa fa-facebook'></i> Sign up with Facebook".html_safe, user_omniauth_authorize_path(:facebook, :from => "new", :musician => "0"), :class => "btn btn-block btn-social btn-facebook", :id => "fb-signup" %>
+    		</div>
+    	</li>
+    	<% end %>
+    </ul>
+</div>
+</nav>
+
+<%= yield %>
+
+
+<footer class="footer">
+      <div class="container">
+      	<div style="float:right">
+	      	<i class="icon icon-social-twitter social-twitter"></i>
+	      	<i class="icon icon-social-facebook social-facebook"></i>
+	      	<i class="icon icon-social-soundcloud social-soundcloud"></i>
+	      </div>
+      </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HeatUp - PlayNow</title>
+	<head>
+
+		<style>
+		body {
+			background-image:url("<%= asset_path @genre.downcase+'.jpg' %>");
+			overflow: hidden;
+		}
+
+		.table-page {
+			position: absolute;
+			left: 20%;
+			right: 20%;
+			top: 50%;
+			width: 60%;
+			text-align: center;
+			font-family: 'Arimo', sans-serif;
+			color:#E62F2F;
+			/*background-color: rgba(255,255,255,0.5);*/
+			border: 2px solid rgba(255, 255, 255, 0.4);
+			border-radius: 14px;
+			-webkit-border-radius: 14px;
+			-moz-border-radius: 14px;
+			border-collapse: separate !important;
+		}
+
+		.title-size {
+			font-size: 40px;
+			color:#E62F2F;
+		}
+
+		.blurred-bg {
+			background-image: url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+			background-repeat: no-repeat;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			-webkit-background-size: cover;
+			background-position:top center;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+		.blurred-bg.tinted {
+			background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+			background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+			background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		}
+		.blurred-bg.shaded {
+			background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+			background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+			background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path @genre.downcase+'-blurred.jpg' %>");
+		}
+
+		.table-no-border>thead>tr>th, 
+		.table-no-border>tbody>tr>th, 
+		.table-no-border>tfoot>tr>th, 
+		.table-no-border>thead>tr>td, 
+		.table-no-border>tbody>tr>td, 
+		.table-no-border>tfoot>tr>td {
+			border-top: none;
+			border-bottom: none;
+		}
+
+		.table-page>thead>tr>th {
+			font-weight: bold;
+			font-size: 20px;
+			text-align: center;
+		}
+
+		.left-player {
+			position: absolute;
+			left: 10%;
+			top: 30%;
+		}
+
+		.right-player {
+			position: absolute;
+			right: 10%;
+			top: 30%;
+		}
+
+		label {
+			font-family: 'Arimo', sans-serif;
+			color:#E62F2F;
+		}
+
+		.ui360 div a {
+			font-family: 'Arimo', sans-serif;
+			color:#E62F2F;
+		}
+
+		.btn-vote {
+			position: absolute;
+			top: 60%;
+			width: 20%;
+			left: 40%;
+			right: 40%;
+		}
+
+		#top-songs {
+			position:absolute;
+			top: 80%;
+			left: 0%;
+			right: 0%;
+		}
+
+		#top-songs:focus {
+			outline: 0px;
+		}
+
+		</style>
+
+		<style>
+		input[type="radio"] {
+		display: none;
+	}
+
+	input[type="radio"] + label {
+		font-family: 'Open Sans', sans-serif;
+		color:#E62F2F;
+		font-size: 14px;
+	}
+
+	input[type="radio"] + label span {
+		display: inline-block;
+		width: 11px;
+		height: 11px;
+		margin: -1px 8px 0 8px;
+		vertical-align: middle;
+		cursor: pointer;
+		-moz-border-radius: 50%;
+		border-radius: 50%;
+		-webkit-box-shadow: 0px 0px 0px 5px rgba(230, 47, 47, 1);
+		-moz-box-shadow: 0px 0px 0px 5px rgba(230, 47, 47, 1);
+		box-shadow: 0px 0px 0px 5px rgba(230, 47, 47, 1);
+	}
+
+	input[type="radio"] + label span {
+		background-color: rgba(0,0,0,0);
+	}
+
+	input[type="radio"]:hover + label span:hover {
+		background-color: rgba(230, 47, 47,0.5);
+	}
+
+	input[type="radio"]:checked + label span {
+		background-color: #E62F2F;
+	}
+
+	input[type="radio"]:hover:checked + label span:hover {
+		background-color: #E62F2F;
+	}
+
+
+
+	input[type="radio"] + label span,
+	input[type="radio"]:checked + label span,
+	input[type="radio"]:hover + label span {
+		-webkit-transition: background-color 0.4s linear;
+		-o-transition: background-color 0.4s linear;
+		-moz-transition: background-color 0.4s linear;
+		transition: background-color 0.4s linear;
+	}
+
+		</style>
+
+		<script>
+		<% if @last_10.length > 0 %>
+			$(document).ready(function() {
+				$("#last10").modal('show');
+			})
+		<% end %>
+		</script>
+
+		<body>
+			<h1 class="title title-size"><%= @genre %></h1>
+
+			<% if @song1 and @song2 %>
+				<%= form_tag vote_path, :id => "vote-form" do %>
+					<div class="left-player">
+						<div class="ui360">
+							<a href="<%= @song1.song_bite.url %>" class="test"><%= @song1.user.name + " - " + @song1.name%></a>
+						</div>
+						<%= radio_button_tag(:win, "win1") %>
+						<%= label_tag(:win_win1, "<span></span>Vote this song!".html_safe) %>
+					</div>
+
+					<div class="right-player">
+						<div class="ui360">
+							<a href="<%= @song2.song_bite.url %>"><%= @song2.user.name + " - " + @song2.name%></a>
+						</div>
+						<%= radio_button_tag(:win, "win2") %>
+						<%= label_tag(:win_win2, "<span></span>Vote this song!".html_safe) %>
+					</div>
+
+					<input type="submit" name="vote" value="Vote" class="btn btn-danger btn-vote"></input>
+				<% end %>
+			<% end %>
+
+
+		<a data-toggle="modal" data-target="#topSongs" class="text-center title-size" id="top-songs" href="#">Top Songs</a>
+
+		<!--<table class="table table-page table-no-border blurred-bg tinted">
+			<caption class="text-center title-size">Top Songs</caption>
+			<thead>
+				<tr>
+					<th>Place</th>
+					<th>Title</th>
+					<th>Artist</th>
+					<th>Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @songs.each do |f| %>
+				<tr>
+					<td align="center">1</td>
+					<td align="center"><%= f.name %></td>
+					<td align="center"><%= f.user.name %></td>
+					<td align="center"><%= f.score %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>-->
+
+		<div class="modal fade"
+		     id="topSongs"
+		     tabindex="-1"
+		     role="dialog"
+		     aria-labelledby="myModalLabel"
+		     aria-hidden="true"
+		>
+		    <div class="modal-dialog">
+	            <!-- blah blah content here -->
+	            <table class="table table-page table-no-border blurred-bg tinted">
+					<caption class="text-center title-size">Top Songs</caption>
+					<thead>
+						<tr>
+							<th>Place</th>
+							<th>Title</th>
+							<th>Artist</th>
+							<th>Score</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @songs.each_with_index do |f, i| %>
+						<tr>
+							<td align="center"><%= i + 1 %></td>
+							<td align="center"><%= f.name %></td>
+							<td align="center"><%= f.user.name %></td>
+							<td align="center"><%= f.score.round(2) %></td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+		   </div>
+		</div>
+
+		<% if @last_10.length > 0 %>
+		<div class="modal fade"
+		     id="last10"
+		     tabindex="-1"
+		     role="dialog"
+		     aria-labelledby="myModalLabel"
+		     aria-hidden="true"
+		>
+		    <div class="modal-dialog">
+		        <table class="table table-page table-no-border blurred-bg tinted">
+					<caption class="text-center title-size">Last 10 Songs You Liked</caption>
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Artist</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @songs.each_with_index do |f, i| %>
+						<tr>
+							<td align="center"><%= f.is_downloadable ? link_to(f.name, f.song_large) : f.name %></td>
+							<td align="center"><%= link_to f.user.name, f.user %></td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+		   </div>
+		</div>
+		<% end %>
+	</body>
+	</html>

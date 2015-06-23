@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: classical_songs
+#
+#  id          :integer          not null, primary key
+#  title       :string
+#  artist      :string
+#  path        :string
+#  votes       :integer
+#  musician_id :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  artist: MyString
+  path: MyString
+  votes: 1
+  uploader: 
+
+two:
+  title: MyString
+  artist: MyString
+  path: MyString
+  votes: 1
+  uploader: 

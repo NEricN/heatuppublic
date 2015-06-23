@@ -1,0 +1,254 @@
+<style>
+
+body {
+  background-image:url("<%= asset_path 'settings.jpg' %>");
+  overflow: hidden;
+
+}
+
+.blurred-bg {
+  background-image: url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-repeat: no-repeat;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.blurred-bg.tinted {
+  background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+}
+.blurred-bg.shaded {
+  background-image: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("<%= asset_path 'settings-blurred.jpg' %>");
+}
+
+.form-box {
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-collapse: separate !important;
+  width: 60%;
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 35%;
+}
+
+.submit-row {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.title-size {
+  top: 20%;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.offset-top {
+  padding-top: 20px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.padding-upload {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.padding-around {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+</style>
+
+<script>
+  $(document).ready(function() {
+    $("#portion").hide();
+    $("#is_downloadable").change(function() {
+      if($(this).is(':checked')) {
+        $("#portion").show();
+      } else {
+        $("#portion").hide();
+      }
+    });
+
+    $("#is_full_song").change(function() {
+      if($(this).is(':checked')) {
+        $("#inner-portion").hide();
+      } else {
+        $("#inner-portion").show();
+      }
+    });
+  })
+
+</script>
+
+
+<!--<h2>Edit <%= resource_name.to_s.humanize %></h2>-->
+
+<h1 class="title title-size">Settings</h1>
+
+<div class="form-box blurred-bg tinted">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put}) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, class: "form-control" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+  <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
+  </div>
+
+  <% if current_user.musician %>
+  <div class="row-fluid submit-row">
+    <%= f.submit "Update", :class => "btn btn-default col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1"%>
+    <a href="#myModal" role="button" class="btn btn-warning col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1" data-toggle="modal">Upload</a>
+    <%= button_to "Delete Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1"%>
+  </div>
+  <% else %>
+  <div class="row-fluid submit-row">
+    <%= f.submit "Update", :class => "btn btn-default col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1"%>
+
+    <%= button_to "Delete Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2"%>
+  </div>
+  <% end %>
+  <% end %>
+  <div class="text-center row-fluid submit-row">
+    <%= link_to "Back", :back, class: "col-sm-10 col-sm-offset-2 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4 offset-top custom-font-color"%>
+  </div>
+
+  <!-- Modal -->
+  <!-- Modal -->
+  <%= form_tag upload_path, multipart: true do %>
+  <div class="modal fade"
+     id="myModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true"
+  >
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Upload a song</h4>
+          </div>
+            <!-- blah blah content here -->
+          <div class="padding-around">
+            
+            
+            <%= label_tag 'name', 'Title' %>
+            <%= text_field_tag 'name', nil, class: "form-control"%>
+
+            <div class="row">
+              <%= label_tag 'genre', 'Genre' %>
+              <%= select_tag "genre", options_for_select(["indie", "house", "techno", "dubstep", "drum-and-bass", "trance", "electronica", "metal", "rock", "country", "blues", "jazz"]) %>
+            </div>
+
+            <div class="form-group">
+              <b class="col-md-12 text-center">Don't see your genre? Pick the closest one and tell us what your genres are!</b>
+              <%= label_tag 'optional_genre_1', 'Optional Genre 1' %>
+              <%= text_field_tag 'optional_genre_1'%>
+
+              <%= label_tag 'optional_genre_2', 'Optional Genre 2' %>
+              <%= text_field_tag 'optional_genre_2'%>
+            </div>
+
+            <div class="row">
+              <b class="col-md-12 text-center">15 Second Bite Start Time</b>
+              <div class="col-md-6 col-sm-6">
+                <%= label_tag 'start_15_m', 'Minutes' %>
+                <%= number_field_tag 'start_15_m', 0, min: 0, class: "form-control" %>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <%= label_tag 'start_15_s', 'Seconds' %>
+                <%= number_field_tag 'start_15_s', 0, min: 0, max: 60, class: "form-control" %>
+              </div>
+            </div>
+
+            <%= check_box_tag 'is_downloadable'%>
+            <%= label_tag 'is_downloadable', "I want to put my song or a portion of it up for download." %>
+
+            <div class="row" id="portion">
+              <div id="inner-portion">
+                <b class="col-md-12 text-center">40 Second Bite Start Time</b>
+                <div class="col-md-6 col-sm-6">
+                  <%= label_tag 'start_40_m', 'Minutes' %>
+                  <%= number_field_tag 'start_40_m', 0, min: 0, class: "form-control" %>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <%= label_tag 'start_40_s', 'Seconds' %>
+                  <%= number_field_tag 'start_40_s', 0, min: 0, max: 60, class: "form-control" %>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <%= check_box_tag 'is_full_song' %>
+                <%= label_tag 'is_full_song', "I want the entire song to be able to be downloaded." %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag 'website', 'External link (if any)' %>
+              <%= text_field_tag 'website'%>
+              <p class="help-block">Put an external link for interested users to visit! (optional)</p>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag 'song', 'Song file' %>
+              <%= file_field_tag 'song'%>
+              <p class="help-block">Upload your full song here. (Don't worry, we'll only store what you tell us.)</p>
+            </div>
+          </div>
+
+
+           <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" name="upload" value="Upload" class="btn btn-warning">Upload</button>
+          </div>
+       </div>
+   </div>
+  <% end %>
+</div>
+</div>
